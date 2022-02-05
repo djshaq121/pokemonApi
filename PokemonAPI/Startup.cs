@@ -28,6 +28,7 @@ namespace PokemonAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ITranslateService, TranslateService>();
             services.AddScoped<IPokemonService, PokemonService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>

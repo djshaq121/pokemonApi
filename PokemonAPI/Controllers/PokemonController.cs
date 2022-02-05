@@ -23,6 +23,10 @@ namespace PokemonAPI.Controllers
         public async Task<ActionResult<PokemonDto>> GetPokemon(string name)
         {
             var pokemon = await pokemonService.GetPokemonInformation(name);
+
+            if (pokemon == null)
+                return BadRequest("Pokemon Not Found");
+
             var pokemonDto = new PokemonDto()
             {
                 Name = pokemon.Name,
@@ -32,6 +36,14 @@ namespace PokemonAPI.Controllers
             };
 
             return Ok(pokemonDto);
+        }
+
+        [HttpGet("translated/{name}")]
+        public async Task<ActionResult<PokemonDto>> GetPokemonWithTranslation(string name)
+        {
+           var pokemon = await pokemonService.GetPokemonWithTranslation(name);
+
+           return Ok(pokemon);
         }
 
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace PokemonAPI
@@ -26,7 +27,13 @@ namespace PokemonAPI
             if (FlavorTexts == null || !FlavorTexts.Any())
                 return "";
 
-            return FlavorTexts.FirstOrDefault(x => x?.Language?.Name == language)?.Description;
+            var description = FlavorTexts.FirstOrDefault(x => x?.Language?.Name == language)?.Description;
+            if(String.IsNullOrEmpty(description))
+                return "";
+
+            description = Regex.Replace(description, @"\r\n?|\n|\f", " ");
+
+            return description;
         }
     }
 

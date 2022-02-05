@@ -12,15 +12,18 @@ namespace PokemonAPI.Services
     public class PokemonService : IPokemonService
     {
         private readonly IHttpClientFactory clientFactory;
-        public PokemonService(IHttpClientFactory httpClient)
+        private readonly ITranslateService translateService;
+
+        public PokemonService(IHttpClientFactory httpClient, ITranslateService translateService)
         {
             clientFactory = httpClient;
+            this.translateService = translateService;
         }
 
         public async Task<PokemonModel> GetPokemonInformation(string pokemonName)
         {
-            var uri = "https://pokeapi.co/api/v2/pokemon-species/" + pokemonName;
-            var request = new HttpRequestMessage(HttpMethod.Get, uri);
+            var url = "https://pokeapi.co/api/v2/pokemon-species/" + pokemonName;
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
            
             var client = clientFactory.CreateClient();
 
@@ -40,6 +43,30 @@ namespace PokemonAPI.Services
                 throw new Exception(response.ReasonPhrase);
             }
 
+        }
+
+        public async Task<PokemonDto> GetPokemonWithTranslation(string name)
+        {
+            var pokemon = await GetPokemonInformation(name);
+            if (pokemon == null)
+                throw new Exception("Failed to get pokemon");
+
+            var translatedString = "";
+            // Maybe instead of hardcoding the translateLangauge, we could create an interface
+            if (pokemon?.Habitat.Name == "cave" || pokemon?.IsLegendary == true)
+                translatedString = await translateService.TranslateText(pokemon.GetDescriptionByLangauge("en"), "yoda");
+            else
+                translatedString = await translateService.TranslateText(pokemon.GetDescriptionByLangauge("en"), "shakespeare");
+            
+            var pokemonDto = new PokemonDto
+            {
+                Name = pokemon?.Name,
+                Habitat = pokemon?.Habitat.Name,
+                IsLegendary = pokemon.IsLegendary,
+                Description = translatedString ?? pokemon?.GetDescriptionByLangauge("en")
+            };
+
+            return pokemonDto;
         }
     }
 }
