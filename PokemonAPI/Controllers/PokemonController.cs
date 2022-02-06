@@ -31,7 +31,7 @@ namespace PokemonAPI.Controllers
             {
                 Name = pokemon.Name,
                 Description = pokemon.GetDescriptionByLangauge("en"),
-                Habitat = pokemon.Habitat.Name,
+                Habitat = pokemon.PokemonHabitat.Name,
                 IsLegendary = pokemon.IsLegendary
             };
 

@@ -53,7 +53,7 @@ namespace PokemonAPI.Services
 
             var translatedString = "";
             // Maybe instead of hardcoding the translateLangauge, we could create an interface
-            if (pokemon?.Habitat.Name == "cave" || pokemon?.IsLegendary == true)
+            if (pokemon?.PokemonHabitat.Name == "cave" || pokemon?.IsLegendary == true)
                 translatedString = await translateService.TranslateText(pokemon.GetDescriptionByLangauge("en"), "yoda");
             else
                 translatedString = await translateService.TranslateText(pokemon.GetDescriptionByLangauge("en"), "shakespeare");
@@ -61,7 +61,7 @@ namespace PokemonAPI.Services
             var pokemonDto = new PokemonDto
             {
                 Name = pokemon?.Name,
-                Habitat = pokemon?.Habitat.Name,
+                Habitat = pokemon?.PokemonHabitat.Name,
                 IsLegendary = pokemon.IsLegendary,
                 Description = translatedString ?? pokemon?.GetDescriptionByLangauge("en")
             };

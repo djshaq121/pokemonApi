@@ -17,7 +17,7 @@ namespace PokemonAPI
         public bool IsLegendary { get; set; }
 
         [JsonPropertyName("habitat")]
-        public Habitat Habitat { get; set; }
+        public Habitat PokemonHabitat { get; set; }
 
         [JsonPropertyName("flavor_text_entries")]
         public List<FlavorTextEntries> FlavorTexts { get; set; }
