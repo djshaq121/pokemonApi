@@ -34,18 +34,26 @@ For more information, see [Install the .NET SDK with Visual Studio](https://docs
 
 #### Running the API
 Download the project
+
 Navigate to the project folder
+
 Open the solution "PokemonApp.sln"
+
 Verfiy everything works by building the project
+
 Run the project!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 #### HTTP Endpoints
 There are two Endpoint
+
 EndPoint 1 - Gets basic Pokemon Information
+
 GET /pokemon/<pokemon name/ Id>
 
 EndPoint 2 - Get Translated pokemon description
+
 GET /pokemon/translated/<pokemon name/ Id>
+
 <p align="right">(<a href="#top">back to top</a>)</p>
