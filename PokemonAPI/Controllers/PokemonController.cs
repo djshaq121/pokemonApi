@@ -29,9 +29,9 @@ namespace PokemonAPI.Controllers
 
             var pokemonDto = new PokemonDto()
             {
-                Name = pokemon.Name,
+                Name = pokemon?.Name,
                 Description = pokemon.GetDescriptionByLangauge("en"),
-                Habitat = pokemon.PokemonHabitat.Name,
+                Habitat = pokemon?.PokemonHabitat?.Name,
                 IsLegendary = pokemon.IsLegendary
             };
 
